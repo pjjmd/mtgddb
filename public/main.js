@@ -20,8 +20,8 @@ var successess=0;
 var getCard=function() {
 Parse.Cloud.run('getCard', {}, {
 		success: function(result) {
-		updatePic(result);
 		cardID=result;
+		updatePic();
 		},
 		error: function(error) {console.log(error);}
 	});
@@ -31,14 +31,14 @@ Parse.Cloud.run('getCard', {}, {
 
 
 //This function emptys the .thumbnail div, and then adds the current image's url.  This should probably be rewritten to only modify the dom once, and also be less reliant on the structure of the html page
-function updatePic(id) {
+function updatePic() {
 	$(".thumbnail").empty();
-	$(".thumbnail").append("<img src='http://mtgimage.com/multiverseid/"+id+".jpg' style='height:75%'>");	
+	$(".thumbnail").append("<img src='http://mtgimage.com/multiverseid/"+cardID+".jpg' style='height:75%'>");	
 };
 
 //This is a function that calls server side code, since only code that runs on the server can modify the parse database.
-function reviewCard (xid, xTag){
-	Parse.Cloud.run('increment', { id:xid,tag:xTag}, {
+function reviewCard (xTag){
+	Parse.Cloud.run('increment', { id:cardID,tag:xTag}, {
 		success: function(result) {
 			//The serverside code will return the phrase 'best' if a card has been tripple keyed.
 			if (result==="best"){
@@ -66,21 +66,25 @@ function tutorial() {
 	}
 	else if (stage===1) { 
 		$(".tutorial").text("This object has a humanoid character on it, but it is difficult to identify them as 'Man' or 'Woman', please mark it 'Humanoid'.");
-		card.set("multiverseid",1460);
+		cardID=1460;
+		updatePic();
 		listen="humanoid";	
 	}
 	else if (stage===2) {
 		$(".tutorial").text("The card features 2 people, so select 'Both'. Try to avoid making decisions like 'the subject of this card is female, so this card is 'Woman'.");
-		card.set("multiverseid",15377);
+		cardID=15377;
+		updatePic();
 		listen="both";
 	}
 	else if (stage===3) {
-		card.set("multiverseid",22959);
+		cardID=22959;
+		updatePic();
 		$(".tutorial").text("There is a male character in this image, with difficult to identify masses of people behind him.  Mark this 'Man'.");
 		listen="man";	
 	}
 	else if (stage===4) {
-		card.set("multiverseid",2844);
+		cardID=2844;
+		updatePic();
 		$(".tutorial").text("Oh man, Magic has art that is tricky to tag.  Are these goblins all male? Uhm.. maybe? In cases like this, go with your gut. Can you identify atleast 1 male and 1 female goblin in this picture? Mark it 'Both'. Are they all male? Mark it 'Man'. Are their genders indistinguishable? Mark it 'Humanoid'.");
 		listen="button";
 	}
@@ -89,11 +93,8 @@ function tutorial() {
 
 //The meat of the program.
 $( document ).ready(function() {
-
-	
-	tutorial();
 	updatePic();
-
+tutorial();
 	$("button").click(function(){
 		if ($(this).attr('id')===listen || listen==="button" ){	
 			if (stage<5){
