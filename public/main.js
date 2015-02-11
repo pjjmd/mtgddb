@@ -57,9 +57,17 @@ function reviewCard (xTag){
 
 };
 
-//Tutorial stuff
+//The tutorial has 5 stages, and iterates over them one at a time. Each time it updates the dom's tutorial text, and then updates the global card variable with the multiverseid of the desired picture
 function tutorial() { 
-	if (stage===0){
+	//checks to see if the tutorial is supposed to be skipped
+	if ($(".tutorial").text()==="Pro Mode"){
+		stage=5;
+		listen="button";
+		$(".tutorial").text("Number of cards tripple keyed this session: "+successess);
+		getCard();
+	}
+	//if not, checks what stage of the tutorial the user is on, and sets listeners appropriately
+	else if (stage===0){
 		$(".tutorial").text("This object has no discernable humanoid characters in it, so mark it as 'neither'.");
 		listen="neither";				
 	}
@@ -86,16 +94,11 @@ function tutorial() {
 	stage++
 };
 
+//The meat of the program.
 $( document ).ready(function() {
-	if ($(".tutorial").text()==="Pro Mode"){
-		stage=5;
-		listen="button";
-		$(".tutorial").text("Number of cards tripple keyed this session: "+successess);
-		getCard();
-	}
-	else {
-		tutorial();
-	}
+
+	
+	tutorial();
 	updatePic();
 
 	$("button").click(function(){
