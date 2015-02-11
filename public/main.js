@@ -1,18 +1,27 @@
+
+//The parse client and JS API keys.  These will allow you to querey the database.  They will not allow you to alter any of the information on the database.
 Parse.initialize("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnYJWdHp9NzG9ynYr2G75jlw6");   
+
+//The 
 var CardObject = Parse.Object.extend("CardObject");
 var card=new CardObject();
-var number=0;
-var listen="";
-var stage=0;
-var successess=0;
 card.set("multiverseid",1);
+
+//I'm sloppy and have global variables all over the place.
+//Listen is a variable for the tutorial section that holds the desired answer for the tutorial, and sets the listenr to only pay attention to that button
+var listen="";
+//This tracks what stage of the tutorial the user is on.
+var stage=0;
+//This tracks how many times an entry has been tripple keyed successfully this session.
+var successess=0;
+
 
 var getCard=function() {
 	console.log("Looking for new card");
 	var query = new Parse.Query(CardObject);
 	query.doesNotExist("gender");
 	query.find({success: function(results) {
-		number=parseInt((Math.random()*100));
+	var number=parseInt((Math.random()*100));
 if (results.length<number){
 	number=results.length-1;
 }
