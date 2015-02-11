@@ -5,7 +5,8 @@ Parse.initialize("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnY
 //Because I don't know how promises work, the code currently uses a global variable with a CardObject object already initiated so my code works.
 var CardObject = Parse.Object.extend("CardObject");
 var card=new CardObject();
-card.set("multiverseid",1);
+var cardID=1;
+
 //I'm sloppy and have global variables all over the place.
 //Listen is a variable for the tutorial section that holds the desired answer for the tutorial, and sets the listenr to only pay attention to that button
 var listen="";
@@ -15,35 +16,29 @@ var stage=0;
 var successess=0;
 
 
-
 //This is the funciton that sets the global card variable to a new card, and calls updateCard to update the DOM.
 var getCard=function() {
-// Parse.Query is a parse object with a method of 'find' that will return an array of objects that match the selectors given to it.
-	var query = new Parse.Query(CardObject);
-//Here, the only selector I am looking for is that it hasn't had it's gender set.
-	query.doesNotExist("gender");
-//The default size of the array is 100 at it's largest, we want to get 1000 to reduce the amount of repeats the user sees.
-	query.limit(1000);
-	query.find({success: function(results) { 
-//We select a random result from the array.
-		card=results[parseInt((Math.random()*results.length))];
+Parse.Cloud.run('getCard', {}, {
+		success: function(result) {
+		updatePic(result);
+		cardID=result;
+		},
+		error: function(error) {console.log(error);}
+	});
 //We then update the picture on the screen
-		updatePic();},
-//Error handling!		
-		error: function(error) {
-			console.log("Error with getCard");} });
+
 };
 
 
 //This function emptys the .thumbnail div, and then adds the current image's url.  This should probably be rewritten to only modify the dom once, and also be less reliant on the structure of the html page
-function updatePic() {
+function updatePic(id) {
 	$(".thumbnail").empty();
-	$(".thumbnail").append("<img src='http://mtgimage.com/multiverseid/"+card.get("multiverseid")+".jpg' style='height:75%'>");	
+	$(".thumbnail").append("<img src='http://mtgimage.com/multiverseid/"+id+".jpg' style='height:75%'>");	
 };
 
 //This is a function that calls server side code, since only code that runs on the server can modify the parse database.
-function reviewCard (xTag){
-	Parse.Cloud.run('increment', { id:card.get('multiverseid'),tag:xTag}, {
+function reviewCard (xid, xTag){
+	Parse.Cloud.run('increment', { id:xid,tag:xTag}, {
 		success: function(result) {
 			//The serverside code will return the phrase 'best' if a card has been tripple keyed.
 			if (result==="best"){
@@ -53,8 +48,6 @@ function reviewCard (xTag){
 		},
 		error: function(error) {}
 	});
-	console.log(card.get('name')+ " tagged with " + xTag);
-
 };
 
 //The tutorial has 5 stages, and iterates over them one at a time. Each time it updates the dom's tutorial text, and then updates the global card variable with the multiverseid of the desired picture
