@@ -1,12 +1,11 @@
-
 //The parse client and JS API keys.  These will allow you to querey the database.  They will not allow you to alter any of the information on the database.
-Parse.initialize("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnYJWdHp9NzG9ynYr2G75jlw6");   
 
-//The 
+
+Parse.initialize("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnYJWdHp9NzG9ynYr2G75jlw6");   
+//Because I don't know how promises work, the code currently uses a global variable with a CardObject object already initiated so my code works.
 var CardObject = Parse.Object.extend("CardObject");
 var card=new CardObject();
 card.set("multiverseid",1);
-
 //I'm sloppy and have global variables all over the place.
 //Listen is a variable for the tutorial section that holds the desired answer for the tutorial, and sets the listenr to only pay attention to that button
 var listen="";
@@ -16,46 +15,49 @@ var stage=0;
 var successess=0;
 
 
-var getCard=function() {
-	console.log("Looking for new card");
-	var query = new Parse.Query(CardObject);
-	query.doesNotExist("gender");
-	query.find({success: function(results) {
-	var number=parseInt((Math.random()*100));
-if (results.length<number){
-	number=results.length-1;
-}
-		card=results[number];
-		updatePic();},
-		error: function(error) {
 
+//This is the funciton that sets the global card variable to a new card, and calls updateCard to update the DOM.
+var getCard=function() {
+// Parse.Query is a parse object with a method of 'find' that will return an array of objects that match the selectors given to it.
+	var query = new Parse.Query(CardObject);
+//Here, the only selector I am looking for is that it hasn't had it's gender set.
+	query.doesNotExist("gender");
+//The default size of the array is 100 at it's largest, we want to get 1000 to reduce the amount of repeats the user sees.
+	query.limit(1000);
+	query.find({success: function(results) { 
+//We select a random result from the array.
+		card=results[parseInt((Math.random()*results.length))];
+//We then update the picture on the screen
+		updatePic();},
+//Error handling!		
+		error: function(error) {
 			console.log("Error with getCard");} });
 };
 
 
-
+//This function emptys the .thumbnail div, and then adds the current image's url.  This should probably be rewritten to only modify the dom once, and also be less reliant on the structure of the html page
 function updatePic() {
 	$(".thumbnail").empty();
 	$(".thumbnail").append("<img src='http://mtgimage.com/multiverseid/"+card.get("multiverseid")+".jpg' style='height:75%'>");	
 };
 
+//This is a function that calls server side code, since only code that runs on the server can modify the parse database.
 function reviewCard (xTag){
-Parse.Cloud.run('increment', { id:card.get('multiverseid'),tag:xTag}, {
-  success: function(result) {
-    console.log("result:"+result)
-if (result==="best"){
-	successess+=1;
-	console.log("boop!");
-}
-  },
-  error: function(error) {
-  }
-});
-	
+	Parse.Cloud.run('increment', { id:card.get('multiverseid'),tag:xTag}, {
+		success: function(result) {
+			//The serverside code will return the phrase 'best' if a card has been tripple keyed.
+			if (result==="best"){
+//This updates the global variable which will (later on) update the tutorial text to let the user know he has been succesfull in building the database
+				successess+=1;
+			}
+		},
+		error: function(error) {}
+	});
 	console.log(card.get('name')+ " tagged with " + xTag);
-getCard();
+
 };
 
+//Tutorial stuff
 function tutorial() { 
 	if (stage===0){
 		$(".tutorial").text("This object has no discernable humanoid characters in it, so mark it as 'neither'.");
@@ -84,27 +86,19 @@ function tutorial() {
 	stage++
 };
 
-
-
-
 $( document ).ready(function() {
 	if ($(".tutorial").text()==="Pro Mode"){
-		console.log("Stuff");
 		stage=5;
 		listen="button";
+		$(".tutorial").text("Number of cards tripple keyed this session: "+successess);
 		getCard();
 	}
 	else {
-
-	tutorial();
-	console.log("Check 1 2");
-	console.log($(".tutorial").text())
+		tutorial();
 	}
 	updatePic();
 
 	$("button").click(function(){
-		console.log("click");
-		console.log($(this).attr('id'));
 		if ($(this).attr('id')===listen || listen==="button" ){	
 			if (stage<5){
 				tutorial();
@@ -112,8 +106,8 @@ $( document ).ready(function() {
 			}
 			else {
 				$(".tutorial").text("Number of cards tripple keyed this session: "+successess);
-				console.log("Implement me later");
 				reviewCard($(this).attr('id'));
+				getCard();			
 			}
 		}
 	});
