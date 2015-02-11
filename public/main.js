@@ -32,8 +32,7 @@ Parse.Cloud.run('getCard', {}, {
 
 //This function emptys the .thumbnail div, and then adds the current image's url.  This should probably be rewritten to only modify the dom once, and also be less reliant on the structure of the html page
 function updatePic() {
-	$(".thumbnail").empty();
-	$(".thumbnail").append("<img src='http://mtgimage.com/multiverseid/"+cardID+".jpg' style='height:75%'>");	
+$(".cardImg").attr("src", 'http://mtgimage.com/multiverseid/'+cardID+'.jpg')
 };
 
 //This is a function that calls server side code, since only code that runs on the server can modify the parse database.
