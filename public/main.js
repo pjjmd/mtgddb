@@ -1,11 +1,13 @@
 //The parse client and JS API keys.  These will allow you to querey the database.  They will not allow you to alter any of the information on the database.
-
-
 Parse.initialize("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnYJWdHp9NzG9ynYr2G75jlw6");   
 //Because I don't know how promises work, the code currently uses a global variable with a CardObject object already initiated so my code works.
 var CardObject = Parse.Object.extend("CardObject");
 var card=new CardObject();
 var cardID=1;
+
+
+
+
 
 //I'm sloppy and have global variables all over the place.
 //Listen is a variable for the tutorial section that holds the desired answer for the tutorial, and sets the listenr to only pay attention to that button
@@ -42,7 +44,8 @@ function reviewCard (xTag){
 			//The serverside code will return the phrase 'best' if a card has been tripple keyed.
 			if (result==="best"){
 //This updates the global variable which will (later on) update the tutorial text to let the user know he has been succesfull in building the database
-				successess+=1;
+				localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)+1;
+			console.log("ding!");
 			}
 		},
 		error: function(error) {}
@@ -52,11 +55,19 @@ function reviewCard (xTag){
 //The tutorial has 5 stages, and iterates over them one at a time. Each time it updates the dom's tutorial text, and then updates the global card variable with the multiverseid of the desired picture
 function tutorial() { 
 	//checks to see if the tutorial is supposed to be skipped
+	if (localStorage.mtgdbTagScore>0) {
+	stage=5;
+	getCard();
+	listen="button";
+	$(".tutorial").text("Number of cards tripple keyed this session: "+localStorage.mtgdbTagScore);
+	}
+
 	if ($(".tutorial").text()==="Pro Mode"){
 		stage=5;
-		listen="button";
-		$(".tutorial").text("Number of cards tripple keyed this session: "+successess);
+		
 		getCard();
+	
+
 	}
 	//if not, checks what stage of the tutorial the user is on, and sets listeners appropriately
 	else if (stage===0){
@@ -86,24 +97,34 @@ function tutorial() {
 		updatePic();
 		$(".tutorial").text("Oh man, Magic has art that is tricky to tag.  Are these goblins all male? Uhm.. maybe? In cases like this, go with your gut. Can you identify atleast 1 male and 1 female goblin in this picture? Mark it 'Both'. Are they all male? Mark it 'Man'. Are their genders indistinguishable? Mark it 'Humanoid'.");
 		listen="button";
+		localStorage.mtgdbTagScore=0;
 	}
 	stage++
 };
 
 //The meat of the program.
 $( document ).ready(function() {
+	if (localStorage.mtgdbTagScore){
+	console.log(localStorage.mtgdbTagScore);	
+	}
+    else {
+	localStorage.mtgdbTagScore = 0;
+}
+
+	tutorial();
 	updatePic();
-tutorial();
+
 	$("button").click(function(){
 		if ($(this).attr('id')===listen || listen==="button" ){	
-			if (stage<5){
+			if (stage<5) {
 				tutorial();
 				updatePic();
 			}
 			else {
-				$(".tutorial").text("Number of cards tripple keyed this session: "+successess);
 				reviewCard($(this).attr('id'));
 				getCard();			
+				$(".tutorial").text("Number of cards tripple keyed this session: "+localStorage.mtgdbTagScore);
+
 			}
 		}
 	});
