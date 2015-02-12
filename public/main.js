@@ -31,6 +31,47 @@ Parse.Cloud.run('getCard', {}, {
 
 };
 
+function ding(){
+	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)+1;
+	console.log("ding!");
+	var percentageDone=parseInt(localStorage.mtgdbTagScore);
+	percentageDone=percentageDone%10;
+	percentageDone=percentageDone*10;
+	$(".progress-bar").attr("style","width:"+percentageDone+"%");
+	var level=parseInt(localStorage.mtgdbTagScore)-(parseInt(localStorage.mtgdbTagScore)%10)
+	switch (level) {
+		case 0:
+		$(".tutorial").text("Level 0: Apprentice");
+		break;
+		case 10:
+		$(".tutorial").text("Level 1: Adept");
+		break;
+		case 20:
+		$(".tutorial").text("Level 2: Task Mage");
+		break;
+		case 30:
+		$(".tutorial").text("Level 4: Academy Researchers");
+		break;
+		case 40:
+		$(".tutorial").text("Level 5: Academy Elite");
+		break;
+		case 50:
+		$(".tutorial").text("Level 6: Guildmage");
+		break;
+		case 60:
+		$(".tutorial").text("Level 7: Grand Librarian");
+		break;
+		case 70:
+		$(".tutorial").text("Level 8: Pathmage");
+		break;
+		case 80:
+		$(".tutorial").text("Level 9: Seer");
+		break;
+		default:
+		$(".tutorial").text("Level 10: Planeswalker");
+		break;
+	}
+};
 
 //This function emptys the .thumbnail div, and then adds the current image's url.  This should probably be rewritten to only modify the dom once, and also be less reliant on the structure of the html page
 function updatePic() {
@@ -44,8 +85,7 @@ function reviewCard (xTag){
 			//The serverside code will return the phrase 'best' if a card has been tripple keyed.
 			if (result==="best"){
 //This updates the global variable which will (later on) update the tutorial text to let the user know he has been succesfull in building the database
-				localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)+1;
-			console.log("ding!");
+			ding();
 			}
 		},
 		error: function(error) {}
@@ -59,17 +99,17 @@ function tutorial() {
 	stage=5;
 	getCard();
 	listen="button";
-	$(".tutorial").text("Number of cards tripple keyed this session: "+localStorage.mtgdbTagScore);
+	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
+	ding();
 	}
 
 	if ($(".tutorial").text()==="Pro Mode"){
 		stage=5;
-		
 		getCard();
 	
 
 	}
-	//if not, checks what stage of the tutorial the user is on, and sets listeners appropriately
+	//if neitherot, checks what stage of the tutorial the user is on, and sets listeners appropriately
 	else if (stage===0){
 		$(".tutorial").text("This object has no discernable humanoid characters in it, so mark it as 'neither'.");
 		listen="neither";				
@@ -98,6 +138,8 @@ function tutorial() {
 		$(".tutorial").text("Oh man, Magic has art that is tricky to tag.  Are these goblins all male? Uhm.. maybe? In cases like this, go with your gut. Can you identify atleast 1 male and 1 female goblin in this picture? Mark it 'Both'. Are they all male? Mark it 'Man'. Are their genders indistinguishable? Mark it 'Humanoid'.");
 		listen="button";
 		localStorage.mtgdbTagScore=0;
+	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
+	ding();
 	}
 	stage++
 };
@@ -105,10 +147,13 @@ function tutorial() {
 //The meat of the program.
 $( document ).ready(function() {
 	if (localStorage.mtgdbTagScore){
-	console.log(localStorage.mtgdbTagScore);	
+	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
+	ding();
 	}
     else {
 	localStorage.mtgdbTagScore = 0;
+	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
+	ding();
 }
 
 	tutorial();
@@ -123,8 +168,6 @@ $( document ).ready(function() {
 			else {
 				reviewCard($(this).attr('id'));
 				getCard();			
-				$(".tutorial").text("Number of cards tripple keyed this session: "+localStorage.mtgdbTagScore);
-
 			}
 		}
 	});
