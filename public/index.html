@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title> Mtg Demographic Database v1.00</title>
+	<title> Mtg Demographic Database v1.10</title>
 </head>
 <body>
 <link href='style.css' rel='stylesheet'>
@@ -24,6 +24,8 @@
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#about">About</a></li>
 					<li><a href="#contact">Contact</a></li>
+					<li><a href="http://multiversecensus.tumblr.com/">Blog</a></li>
+					<li><a href="https://github.com/pjjmd/mtgddb">GutHub Repo</a></li>
 				</ul>
 			</div>
 		</div>
@@ -44,6 +46,7 @@
 		<button type="button" id="neither" style="margin-left:1%" class="neither btn btn-lg btn-primary" data="Neither"> Neither </button>
 		<button type="button" id="humanoid" style="margin-left:1%" class="humanoid btn btn-lg btn-primary" data="humanoid"> Humanoid </button>
 </div>
+<div id="container">
 <div id="about">
 <h2>The MTG Demographic Database F.A.Q. </h2>
 <h3> What is it? </h3>
@@ -56,11 +59,16 @@
 <p> Sure! Do you want access to the database? Do you want to add tags for the community to generate?  Contact the site author at Peter@JJMacDonald.com and lets talk!</p>
 <h3>How did you build this?</h3>
 <p> It's just JS running on a Parse.API backend.  The card data was provided by the <a href="http://mtgjson.com/">MTG JSON</a> project, and the card images are hosted by the <a href="http://mtgimage.com/">MTG Image </a> project. </p>
-</div>
+<h3>What are you going to do with this data?</h3>
+<p>I plan on making silly infographics that show the casting cost gap between women and men, and possibly calculate it to find out what plane in the multiverse has the highest level of equity. I will publish my findings on <a href="http://multiversecensus.tumblr.com">Multiverse Census</a>.</p>
 <h3>Can I get access to the data?</h3>
-<p>Sure!  Send me an email and I will send you a JSON dump.  The client API key for parse is also available in the source code, and the entire database is publicly readable (if you feel comfortable using the parse api).</p>
+<p>Sure! The data is currently accessible via the Parse API, use the keys ("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnYJWdHp9NzG9ynYr2G75jlw6"). If you want to wait a little bit, I will be dumping the data into a JSON format after each major milestone. If you want help accessing the data, send me an email.</p>
+</div>
 <div us="contact">
 <h2> Contact </h2>
 <p>Email: peter@jjmacdonald.com</p>
 <p>Twitter: @pjjmd </p>	
+</div>
+</div>
+
 </body>
