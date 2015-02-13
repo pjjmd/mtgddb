@@ -139,7 +139,6 @@ function tutorial() {
 		listen="button";
 		localStorage.mtgdbTagScore=0;
 	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
-	ding();
 	}
 	stage++
 };
