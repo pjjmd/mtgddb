@@ -92,7 +92,7 @@ function reviewCard (xTag){
 	});
 };
 
-//The tutorial has 5 stages, and iterates over them one at a time. Each time it updates the dom's tutorial text, and then updates the global card variable with the multiverseid of the desired picture
+//The tutorial has 4 stages, and iterates over them one at a time. Each time it updates the dom's tutorial text, and then updates the global card variable with the multiverseid of the desired picture
 function tutorial() { 
 	//checks to see if the tutorial is supposed to be skipped
 	if (localStorage.mtgdbTagScore>0) {
@@ -115,10 +115,10 @@ function tutorial() {
 		listen="neither";				
 	}
 	else if (stage===1) { 
-		$(".tutorial").text("This object has a humanoid character on it, but it is difficult to identify them as 'Man' or 'Woman', please mark it 'Humanoid'.");
+		$(".tutorial").text("This object has a humanoid character on it, but it is difficult to identify them as 'Man' or 'Woman', please mark it 'Neither'.");
 		cardID=1460;
 		updatePic();
-		listen="humanoid";	
+		listen="neither";	
 	}
 	else if (stage===2) {
 		$(".tutorial").text("The card features 2 people, so select 'Both'. Try to avoid making decisions like 'the subject of this card is female, so this card is 'Woman'.");
@@ -135,7 +135,7 @@ function tutorial() {
 	else if (stage===4) {
 		cardID=2844;
 		updatePic();
-		$(".tutorial").text("Oh man, Magic has art that is tricky to tag.  Are these goblins all male? Uhm.. maybe? In cases like this, go with your gut. Can you identify atleast 1 male and 1 female goblin in this picture? Mark it 'Both'. Are they all male? Mark it 'Man'. Are their genders indistinguishable? Mark it 'Humanoid'.");
+		$(".tutorial").text("Oh man, Magic has art that is tricky to tag.  Are these goblins all male? Uhm.. maybe? In cases like this, go with your gut. Can you identify atleast 1 male and 1 female goblin in this picture? Mark it 'Both'. Are they all male? Mark it 'Man'. Are their genders indistinguishable? Mark it 'Neither'.");
 		listen="button";
 		localStorage.mtgdbTagScore=0;
 	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
