@@ -35,8 +35,15 @@ function ding(){
 	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)+1;
 	console.log("ding!");
 	var percentageDone=parseInt(localStorage.mtgdbTagScore);
+		if (parseInt(percentageDone)<=100){
 	percentageDone=percentageDone%10;
 	percentageDone=percentageDone*10;
+		}
+	else {
+	percentageDone=percentageDone%100;
+	}
+	$(".progress-bar").attr("style","width:"+percentageDone+"%");
+
 	$(".progress-bar").attr("style","width:"+percentageDone+"%");
 	var level=parseInt(localStorage.mtgdbTagScore)-(parseInt(localStorage.mtgdbTagScore)%10)
 	switch (level) {
@@ -67,8 +74,44 @@ function ding(){
 		case 80:
 		$(".tutorial").text("Level 9: Seer");
 		break;
+		case 90:
+		$(".tutorial").text("Level 10: Elder Dragon");
+		break;
+		case 100:
+		$(".tutorial").text("Level 1: Planeswalker");
+		break;
+		case 200:
+		$(".tutorial").text("Level 2: Tibalt, the Fiend-Blooded");
+		break;
+		case 300:
+		$(".tutorial").text("Level 3: Ashiok, Nightmare Weaver");
+		break;
+		case 400:
+		$(".tutorial").text("Level 4: Jace, the Mind Sculptor");
+		break;
+		case 500:
+		$(".tutorial").text("Level 5: Liliana Vess");
+		break;
+		case 600:
+		$(".tutorial").text("Level 6: Garruk, Caller of Beasts");
+		break;
+		case 700:
+		$(".tutorial").text("Level 7: Garruk, Apex Predator");
+		break;
+		case 800:
+		$(".tutorial").text("Level 8: Nicol Bolas, Planeswalker");
+		break;
+		case 900:
+		$(".tutorial").text("Level 9: Mishra");
+		break;
+		case 1000:
+		$(".tutorial").text("Level 10: Yagmoth");
+		break;
+		case 1100:
+		$(".tutorial").text("Level 11+ Urza");
+		break;
 		default:
-		$(".tutorial").text("Level 10: Planeswalker");
+		console.log("womp womp");
 		break;
 	}
 };
