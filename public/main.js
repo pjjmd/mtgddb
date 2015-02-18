@@ -105,10 +105,33 @@ function ding(){
 		$(".tutorial").text("Level 9: Mishra");
 		break;
 		case 1000:
-		$(".tutorial").text("Level 10: Yagmoth");
+		$(".tutorial").text("Level 10: Yawgmoth");
 		break;
 		case 1100:
-		$(".tutorial").text("Level 11+ Urza");
+		$(".tutorial").text("Level 11: Urza");
+		break;
+		case 1200:
+		$(".tutorial").text("Level 1: Conley Woods");
+		break;
+		case 1300:
+		$(".tutorial").text("Level 2: Paul Cheon");
+		break;
+		case 1400:
+		$(".tutorial").text("Level 3: Caleb Durward ");
+		break;
+		case 1500:
+		$(".tutorial").text("Level 4: reddit.com/u/Drinkus");
+		case 1600:
+		$(".tutorial").text("Level 5: Luis Scott-Vargas");
+		case 1700:
+		$(".tutorial").text("Level 6: Patrick Chapin");
+		case 1800:
+		$(".tutorial").text("Level 7: Guillaume Wafo-Tapa");
+		case 1900:
+		$(".tutorial").text("Level 8: Jon Finkel");
+		break;
+		case 2000:
+		$(".tutorial").text("You have tagged over %20 of all magic cards.  Thank you!");
 		break;
 		default:
 		console.log("womp womp");
@@ -179,7 +202,7 @@ function tutorial() {
 		cardID=2844;
 		updatePic();
 		$(".tutorial").text("Oh man, Magic has art that is tricky to tag.  Are these goblins all male? Uhm.. maybe? In cases like this, go with your gut. Can you identify atleast 1 male and 1 female goblin in this picture? Mark it 'Both'. Are they all male? Mark it 'Man'. Are their genders indistinguishable? Mark it 'Neither'.");
-		listen="button";
+		listen="done";
 		localStorage.mtgdbTagScore=0;
 	localStorage.mtgdbTagScore=parseInt(localStorage.mtgdbTagScore)-1;
 	}
@@ -202,6 +225,10 @@ $( document ).ready(function() {
 	updatePic();
 
 	$("button").click(function(){
+		if (listen==="done"){
+			ding();
+			listen="button";
+		}
 		if ($(this).attr('id')===listen || listen==="button" ){	
 			if (stage<5) {
 				tutorial();
