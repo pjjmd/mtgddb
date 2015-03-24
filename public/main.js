@@ -45,7 +45,12 @@ function ding(){
 	$(".progress-bar").attr("style","width:"+percentageDone+"%");
 
 	$(".progress-bar").attr("style","width:"+percentageDone+"%");
-	var level=parseInt(localStorage.mtgdbTagScore)-(parseInt(localStorage.mtgdbTagScore)%10)
+if (parseInt(localStorage.mtgdbTagScore)<100){
+	var level=parseInt(localStorage.mtgdbTagScore)-(parseInt(localStorage.mtgdbTagScore)%10);
+}
+else {
+	var level=parseInt(localStorage.mtgdbTagScore)-(parseInt(localStorage.mtgdbTagScore)%100);
+}
 	switch (level) {
 		case 0:
 		$(".tutorial").text("Level 0: Apprentice");
@@ -141,7 +146,7 @@ function ding(){
 
 //This function emptys the .thumbnail div, and then adds the current image's url.  This should probably be rewritten to only modify the dom once, and also be less reliant on the structure of the html page
 function updatePic() {
-$(".cardImg").attr("src", 'http://mtgimage.com/multiverseid/'+cardID+'.jpg')
+$(".cardImg").attr("src", 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+cardID+'&type=card')
 };
 
 //This is a function that calls server side code, since only code that runs on the server can modify the parse database.

@@ -8,6 +8,7 @@
   	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
 	<script src="main.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -31,15 +32,14 @@
 		</div>
 	</nav>
 	<div class="thumbnail" style="padding-top:5%">
-<img class="cardImg" src="http://mtgimage.com/setname/Zendikar/Harrow.jpg" style="height:65%">
+<img class="cardImg" src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=114905&type=card" style="height:65%">
 	</div>
 	<p class="tutorial" style="text-align:center"> "Stuff" </p>
 	    <div class="progress" style="width:50%; margin-left:25%">
         <div class="progress-bar" style="width: 0%;">
         </div>
     </div>
-	<div class="tagzone" style="text-align:center">
-		
+	<div class="tagzone" style="text-align:center">		
 		<button type="button" id="man" style="margin-left:1%" class="man btn btn-lg btn-primary" data="Man"> Man </button>
 		<button type="button" id="woman" style="margin-left:1%" class="woman btn btn-lg btn-primary" data="Woman"> Woman </button>
 		<button type="button" id="both" style="margin-left:1%" class="both btn btn-lg btn-primary" data="Both"> Both </button>
@@ -49,22 +49,21 @@
 <div id="about">
 <h2>The MTG Demographic Database F.A.Q. </h2>
 <h3> What is it? </h3>
-<p>The Magic the Gathering Demographic Database (MTGDDB) is a community project to tag the collection of over 10k pieces of fantasy art that make up the collectable card game with gender, race, and other demographic tags.  The end goal is a database that can answer questions like 'what is the average casting cost of women in MtG, and how has that changed over time?</p>
+<p>The MtG Demographic Database (MTGDDB) is a community project to tag the collection of over 10k pieces of fantasy art that make up the collectable card game with gender, race, and other demographic tags.  The end goal is a database that can answer questions like 'what is the average casting cost of women in MtG, and how has that changed over time?</p>
 <h3>Why make this?</h3>
 <p>Because data is awesome?  Because MTG (and Wizards of the Coast in general) is making great strides with representation in it's games, and it's interesting to track that?  Because you want to settle a bet about the percentage of black characters in MTG who are bald?</p>
 <h3>How accurate is this?</h3>
-<p>Not very, but it's mostly just for fun?  All contributors will have to take a tutorial, and all answers will be 'tripple keyed'.</p>
+<p>Not very, but it's mostly just for fun?  All contributors will have to take a tutorial, and all answers will be 'tripple keyed'. There are a couple of other methods to protect against garbage data, check the <a href="https://github.com/pjjmd/mtgddb">source code</a> for more details.</p>
 <h3>Can I collaborate?</h3>
 <p> Sure! Do you want access to the database? Do you want to add tags for the community to generate?  Contact the site author at Peter@JJMacDonald.com and lets talk!</p>
 <h3>How did you build this?</h3>
-<p> It's just JS running on a Parse.API backend.  The card data was provided by the <a href="http://mtgjson.com/">MTG JSON</a> project, and the card images are hosted by the <a href="http://mtgimage.com/">MTG Image </a> project. </p>
+<p> It's just JS running on a Parse.API backend.  The card data was provided by the <a href="http://mtgjson.com/">MTG JSON</a> project, and the card images are lo resolution shots hosted on <a href="gatherer.wizards.com">Gatherer.</a> All cards, and art contained within are the property of Wizards of the Coast, and their use here is unauthorized.</p>
 <h3>What are you going to do with this data?</h3>
 <p>I plan on making silly infographics that show the casting cost gap between women and men, and possibly calculate it to find out what plane in the multiverse has the highest level of equity. I will publish my findings on <a href="http://multiversecensus.tumblr.com">Multiverse Census</a>.</p>
 <h3>Can I get access to the data?</h3>
 <p>Sure! The data is currently accessible via the Parse API, use the keys ("dne7c2bhXwlaVfnSRaTmhMAeSBsZpIXj6LrXNGGy", "IFPDd3CRKLYcLDosnYJWdHp9NzG9ynYr2G75jlw6"). If you want to wait a little bit, I will be dumping the data into a JSON format after each major milestone. If you want help accessing the data, send me an email.</p>
 <h3>Where did the humanoid tag go?</h3>
 <p>Initially the gender pass was also trying to tag pictures with humanoids in it versus pictures without humanoids in it.  This wasn't well communicated in the tutorial phase, and ended up causing a lot of fuzzy tagging.  The number of options has been reduced, and all tags for 'neither' and 'humanoid' will be merged.  The initial idea was that it might be handy to be able to have a list of humanoid style monsters for a future tagging project to determine how many were transparent, etc. but that was not the central goal of the project.</p>
-
 </div>
 <div us="contact">
 <h2> Contact </h2>
